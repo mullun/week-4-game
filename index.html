@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Crystal Game</title>
+
+	<link href="assets/css/reset.css" rel="stylesheet">
+	<link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">  <!-- main container -->
+	  <div class="row">   <!-- first row -->
+		<div class=jumbotron>   <!-- jumbotron  -->
+			<h1>Crystal</h1>
+		</div>   <!-- jumbotron  -->
+	  </div>  <!-- first row  -->
+	  <div>   <!-- row to hold the two boxes -->
+	  	<div class="col-md-3" id="leftBox">
+	  		<img id="pastImage" src="assets/images/hangman.jpg" height="100%" width="100%" alt="Artwork">
+	  	</div>
+	  	<div class="col-md-3" id="rightBox">   <!-- box on right ... row 2 -->
+	  		<p>Guess a Fruit Tree name !</p>
+	  		<p>Press any key to get started !</p>
+	  		<p id="numberOfWins">&nbsp<b>0</b>&nbspWin(s)</p>
+	  		<br>
+	  		<p id="numberOfLosses">&nbsp<b>0</b>&nbspLoss(es)</p>
+	  		<p><b>Word being identified</b></p>
+	  		<p id="activeWord">_&nbsp_&nbsp_&nbsp_</p>
+	  		<p><b>Number of GUESS(ES) remaining</b></p>
+	  		<p id="remainingGuesses">13</p>  <!-- place holder value -->
+	  		<p>Letters already guessed</p>
+	  		<p id="lettersGuessed">_</p>
+			<script>
+				var numberOfWins = 0;
+				var numberOfLosses = 0;
+				var wordBank = ["banana", "mango", "dates", "fig", "pear", "apple", "persimmon", "orange", "clementine", "grape", "kiwi"];
+				var blankActive = ["_"];
+				var wordToBeGuessed;  // being updated in function call
+				var remainingGuesses; // counter to keep track of guess number
+				var userGuesses = ["_"];          // 
+				var userGuessesPrint = [""];     // string to store ongoing correct guesses from user
+				var userGuessInWord = [""];      // string to store correct user guesses from user
+				var userGuessInWordPrint = [""];
+				var userGuessNotInWord = ["_"];   // string to store incorrect letter guesses from user
+				chooseWordToBeGuessed ();  // select the word to be guessed;
+				document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
+
+				document.onkeyup = function(event) {   //keep checking for "key up event"
+					var userInput = String.fromCharCode(event.keyCode).toLowerCase();
+					// var userInput = event.key;  // key pressed is captured in userInput
+					console.log("userInput = " + userInput);
+
+					if (remainingGuesses) {   // as long as allowed guesses have not been exhausted ...
+						letterPositionInWord = wordToBeGuessed.indexOf(userInput);
+
+										// get position of letter in word, if applicable
+						if (letterPositionInWord != -1) {  // if letter guessed is part of word
+							// console.log("User Presses part of word = " + userInput);
+
+							if (userGuessInWord.indexOf(userInput) == -1) {  // if letter has not been guessed already
+								remainingGuesses--;
+								// console.log("User inputs new letter in word = " + userInput);
+								console.log("blankActive = " + blankActive);
+
+								var lengthOfPuzzle = wordToBeGuessed.length;
+								// console.log("length of word to be gussed = " + lengthOfPuzzle);
+
+								for (i = 0; i < lengthOfPuzzle; i++) {
+									if (userInput === wordToBeGuessed[i]) {
+										userGuessInWord[i] = userInput;
+										blankActive[i] = userInput;
+									}
+								}
+								console.log("userGuessInWord = " + userGuessInWord);
+								console.log("blankActive = " + blankActive);
+
+								// userGuessInWord.push(userInput); 			// store new letter in user guess
+								userGuessInWordPrint = userGuessInWord.join("");
+								document.getElementById("activeWord").innerHTML = blankActive.join("&nbsp&nbsp");  // print new string
+
+								console.log("wordToBeGuessed = " + wordToBeGuessed);
+								console.log("userGuessInWordPrint = " + userGuessInWordPrint);
+
+
+								if (userGuessInWordPrint === wordToBeGuessed) {
+									numberOfWins ++;
+									document.getElementById("numberOfWins").innerHTML =  "&nbsp<b>" + numberOfWins + "</b>&nbsp Win(s)"; //update wins
+
+									remainingGuesses = 0;
+									console.log("remainingGuesses = " + remainingGuesses);
+									console.log("word Just guessed = " + wordToBeGuessed);
+
+									if (wordToBeGuessed === "orange") {
+										document.getElementById("pastImage").src = "./assets/images/orange.jpg";
+									} else if (wordToBeGuessed === "apple") {
+										document.getElementById("pastImage").src = "./assets/images/apple.jpg";
+									} else if (wordToBeGuessed === "fig") {
+										document.getElementById("pastImage").src = "./assets/images/fig.jpg";
+									} else if (wordToBeGuessed === "grape") {
+										document.getElementById("pastImage").src = "./assets/images/grape.jpg";
+									} else if (wordToBeGuessed === "clementine") {
+										document.getElementById("pastImage").src = "./assets/images/clementine.jpg";
+									} else if (wordToBeGuessed === "dates") {
+										document.getElementById("pastImage").src = "./assets/images/dates.jpg";
+									} else if (wordToBeGuessed === "persimmon") {
+										document.getElementById("pastImage").src = "./assets/images/persimmon.jpg";
+									} else if (wordToBeGuessed === "banana") {
+										document.getElementById("pastImage").src = "./assets/images/banana.jpg";
+									} else if (wordToBeGuessed === "mango") {
+										document.getElementById("pastImage").src = "./assets/images/mango.jpg";
+									} else if (wordToBeGuessed === "pear") {
+										document.getElementById("pastImage").src = "./assets/images/pear.jpg";
+									} else if (wordToBeGuessed === "kiwi") {
+										document.getElementById("pastImage").src = "./assets/images/kiwi.jpg";
+									};
+
+
+									chooseWordToBeGuessed ();  // select the word to be guessed & reset stats;
+
+								}  // when user figures out the word correctly ... 
+
+							}    // if letter in word but has not been guessed already
+
+						}    // if letter guessed is part of word to be guessed
+						
+						else if (userGuesses.indexOf(userInput) == -1) {  // is this is a new guess, then store it
+							remainingGuesses--;
+							userGuesses.push(userInput);
+							userGuessesPrint = userGuesses.join(" ")
+							console.log ("User's new incorrect guess = " + userInput);
+							document.getElementById("lettersGuessed").innerHTML = userGuessesPrint;  // update display with all incorrect guesses of user
+							if (remainingGuesses == 0 ) {
+								numberOfLosses++;
+								document.getElementById("numberOfLosses").innerHTML = "&nbsp<b>" + numberOfLosses + "</b>&nbspLoss(es)";
+								chooseWordToBeGuessed();  // start a new word
+								document.getElementById("pastImage").src = "./assets/images/hangman.jpg";
+							}
+						}   // incorrect new guess from user
+						
+						document.getElementById("remainingGuesses").innerHTML = remainingGuesses; //display remaining guesses
+						if (remainingGuesses == 0) {
+							numberOfLosses++;
+							document.getElementById("numberOfLosses").innerHTML = "&nbsp<b>" + numberOfLosses + "</b>&nbspLoss(es)";
+							chooseWordToBeGuessed();
+							document.getElementById("pastImage").src = "./assets/images/hangman.jpg";
+						};
+					}  // if remaining guesses not less than 0
+				}  // keep checking for keyup event
+
+				function chooseWordToBeGuessed () {
+					userGuesses = [""];          // 
+					userGuessesPrint = [""];     // string to store ongoing correct guesses from user
+					userGuessInWord = [""];      // string to store correct user guesses from user
+					userGuessInWordPrint = [""];
+					userGuessNotInWord = [""];   // string to store incorrect letter guesses from user
+					var numberOfWords = wordBank.length;
+					var indexIntoWordBank = getRandomInt(0, numberOfWords);
+					wordToBeGuessed = wordBank[indexIntoWordBank];   //to be chosen at random
+					remainingGuesses = wordToBeGuessed.length * 2;
+					console.log ("indexIntoWordBank = " + indexIntoWordBank);
+					console.log("wordToBeGuessed = " + wordToBeGuessed);
+					blankActive = ["_"];
+					for (i = 0; i < wordToBeGuessed.length - 1; i++) {
+						blankActive.push("_");
+					}  // to display dashes for word to be guessed
+					// blankActive = blankActive.join("&nbsp&nbsp");  // put spaces between dashes
+					document.getElementById("activeWord").innerHTML = blankActive.join("&nbsp&nbsp");  // display dashes equal to number of letters in word to be guessed
+					document.getElementById("lettersGuessed").innerHTML = "_";  // 
+				}
+
+				function getRandomInt(min, max) {
+				// Returns a random integer between min (included) and max (excluded)
+				// Using Math.round() will give you a non-uniform distribution!
+				  min = Math.ceil(min);
+				  max = Math.floor(max);
+				  return Math.floor(Math.random() * (max - min)) + min;
+				}  // function getRandomInt
+			</script>
+
+	  	</div>
+	  </div>   <!-- box on right ... row 2 -->
+	</div>   <!-- main container -->
+    <!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+</body>
+</html>
