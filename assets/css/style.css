@@ -1,0 +1,21 @@
+.jumbotron {
+	padding-bottom: 2px;
+	padding-top: 2px;
+}
+
+.redWolfButton {
+	background-color: red;
+}
+
+.greenAppleButton {
+	background-color: green;
+}
+
+.blueButterflyButton {
+	background-color: blue;
+}
+
+.pinkSkullButton {
+	background-color: pink;
+	color: black;
+}
