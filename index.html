@@ -56,28 +56,33 @@
 	  	</div>
 	  </div>   <!-- row to hold text about Total Score -->
 	  <div class="row">   <!-- row to hold User Score -->
-	  	<div class="col-md-4" id="userScore">
-	  		<h3>0</h3>
+	  	<div class="col-md-4">
+	  		<h3 id="userScore">0</h3>
 	  	</div>
 	  </div>   <!-- row to hold User Score -->
 		  <script>
 
 		  	var userChoice;
-		  	var userAccrual = 1;
+		  	var userAccrual = 0;
 		  	var redValue = 0;
 		  	var blueValue = 0;
 		  	var pinkValue = 0;
 		  	var greenValue = 0;
+		  	var userWins = 0;
+		  	var userLosses = 0;
+		  	var targetScore = 0;
+		  	assignRandomValues();
+
 
 		  	function assignRandomValues() {
-		  		redValue = getRandomInt(1,15);
-		  		blueValue = getRandomInt(1,15);
-		  		pinkValue = getRandomInt(1,15);
+		  		redValue = getRandomInt(1,12);
+		  		blueValue = getRandomInt(1,13);
+		  		pinkValue = getRandomInt(1,14);
 		  		greenValue = getRandomInt(1,15);
 		  		targetScore = getRandomInt(40,120);
-		  		console.log("targetScore = " + targetScore);
 		  		$("#randomTarget").html(targetScore);
 		  		userAccrual = 0;
+		  		$("#userScore").html(userAccrual);
 		  	};
 
 			function getRandomInt(min, max) {
@@ -90,20 +95,39 @@
 
 			var button = $("button");
 			button.on("click", function(){
-				if (userAccrual === 0) {
+				console.log("button clicked");
+				console.log("userAccrual = " + userAccrual);
+				console.log("targetScore = " + targetScore);
+				if (userAccrual < targetScore) {
 					if ($(this).hasClass("redWolfButton")) {
 						userAccrual = userAccrual + redValue;
+						$("#userScore").html(userAccrual);
+						console.log("red clicked");
 					} else if ($(this).hasClass("blueButterflyButton")) {
 						userAccrual = userAccrual + blueValue;
+						$("#userScore").html(userAccrual);
+						console.log("blue clicked");
 					} else if ($(this).hasClass("pinkSkullButton")) {
 						userAccrual = userAccrual + pinkValue;
+						$("#userScore").html(userAccrual);
+						console.log("pink clicked");
 					} else if ($(this).hasClass("greenAppleButton")) {
 						userAccrual = userAccrual + greenValue;
+						$("#userScore").html(userAccrual);
+						console.log("green clicked");
 					};
-				} else if (userAccrual != 0) {
+				};
+				if (userAccrual > targetScore) {
+					alert("You Lose");
+					userLosses ++;
+					$("#lossesNumber").html("Losses " + userLosses);
 					assignRandomValues();
-				}
-
+				} else if (userAccrual === targetScore) {
+					alert("You Win");
+					userWins ++;
+					$("#winsNumber").html("Wins " + userWins);
+					assignRandomValues();
+				};
 			});
 		  </script>
 		</div>  <!-- main container -->
