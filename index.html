@@ -44,10 +44,10 @@
         </div>
 
         <div class="panel-body">
-            <button id="redCrystal" class="btn btn-primary redWolfButton" value="1"><h1>RED</h1></button>
-            <button id="blueCrystal" class="btn btn-primary blueButterflyButton" value="2"><h1>BLUE</h1></button>
-            <button id="pinkCrystal" class="btn btn-primary pinkSkullButton" value="3"><h1>PINK</h1></button>
-            <button id="greenCrystal" class="btn btn-primary greenAppleButton" value="4"><h1>GREEN</h1></button>
+            <button type="submit" style="border:0; background:transparent;" id="redCrystal" class="btn btn-primary redWolfButton" value="1"><img src="assets/images/redWolf.jpg" height="100px%" width="100px" /></button>
+            <button type="submit" style="border:0; background:transparent;" id="blueCrystal" class="btn btn-primary blueButterflyButton" value="2"><img src="assets/images/blueButterfly.jpg" height="100px%" width="100px" /></button>
+            <button type="submit" style="border:0; background:transparent;" id="pinkCrystal" class="btn btn-primary pinkSkullButton" value="3"><img src="assets/images/pinkSkull.jpg" height="100px%" width="100px" /></button>
+            <button type="submit" style="border:0; background:transparent;" id="greenCrystal" class="btn btn-primary greenAppleButton" value="4"><img src="assets/images/greenApple.jpg" height="100px%" width="100px" /></button>
 		</div>
 	  </div>  <!-- third row to hold cystals images -->
 	  <div class="row">   <!-- row to hold text about Total Score -->
@@ -79,7 +79,7 @@
 		  		blueValue = getRandomInt(1,13);
 		  		pinkValue = getRandomInt(1,14);
 		  		greenValue = getRandomInt(1,15);
-		  		targetScore = getRandomInt(40,120);
+		  		targetScore = getRandomInt(40,100);
 		  		$("#randomTarget").html(targetScore);
 		  		userAccrual = 0;
 		  		$("#userScore").html(userAccrual);
